@@ -74,10 +74,9 @@ public class VideoActivity extends AppCompatActivity {
     new Thread(new Runnable() {
       @Override
       public void run() {
-        Matrix matrix = new Matrix();
-        while(true) {
+        while (true) {
           if (avi == -1) break;
-          renderFrame(surface, bp, matrix);
+          renderFrame(surface, bp);
           if (tv != null) {
             runOnUiThread(new Runnable() {
               @Override
@@ -93,11 +92,11 @@ public class VideoActivity extends AppCompatActivity {
     }).start();
   }
 
-  private void renderFrame(Surface surface, Bitmap bp, Matrix matrix) {
+  private void renderFrame(Surface surface, Bitmap bp) {
     int result = NativeLibInterface.setFrame(avi, bp);
     if (result != -1) {
       Canvas canvas = surface.lockCanvas(null);
-      canvas.drawBitmap(bp, matrix, null);
+      canvas.drawBitmap(bp, 0, 0, null);
       surface.unlockCanvasAndPost(canvas);
     }
   }
