@@ -58,8 +58,6 @@ Java_com_czf_aviplayer_NativeLibInterface_setFrame(JNIEnv *env, jclass clazz, jl
     log("--==--: %s\n", AVI_strerror());
     return -1;
   }
-  log("--==--: frameSize: %ld\n", frameSize);
-  log("--==--: keyFrame: %d\n", keyFrame);
 
   if (AndroidBitmap_unlockPixels(env, jbitmap) < 0) {
     return -1;

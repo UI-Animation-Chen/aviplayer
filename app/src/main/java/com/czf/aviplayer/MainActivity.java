@@ -4,13 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,16 +29,13 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void onRealCreate() {
-    long avi = NativeLibInterface.openFile(Environment.getExternalStorageDirectory() + "/galleon.avi");
-    if (avi != -1) {
-      Log.d("------", "width: " + NativeLibInterface.frameWidth(avi) +
-          ", height: " + NativeLibInterface.frameHeight(avi) + ", rate: " + NativeLibInterface.frameRate(avi));
-      Bitmap bp = Bitmap.createBitmap(NativeLibInterface.frameWidth(avi), NativeLibInterface.frameHeight(avi), Bitmap.Config.RGB_565);
-      NativeLibInterface.setFrame(avi, bp);
-      ImageView iv = findViewById(R.id.iv);
-      iv.setImageBitmap(bp);
-      NativeLibInterface.closeFile(avi);
-    }
+    Button playBtn = findViewById(R.id.play_video);
+    playBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(MainActivity.this, VideoActivity.class));
+      }
+    });
   }
 
   @Override
