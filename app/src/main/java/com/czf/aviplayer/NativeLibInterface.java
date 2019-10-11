@@ -18,6 +18,6 @@ public class NativeLibInterface {
 
   public static native double frameRate(long fileFd);
 
-  public static native int setFrame(long fileFd, Bitmap bp);
+  public static native long setFrame(long fileFd, Bitmap bp);
 
 }

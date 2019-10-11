@@ -57,9 +57,9 @@ typedef struct
 
 typedef struct
 {
-   off_t pos;
-   off_t len;
-   off_t tot;
+  off_t pos;
+  off_t len;
+  off_t tot;
 } audio_index_entry;
 
 
@@ -67,57 +67,57 @@ typedef struct
 
 
 #define AVI_INDEX_OF_INDEXES 0x00             // when each entry in aIndex
-                                              // array points to an index chunk
+// array points to an index chunk
 #define AVI_INDEX_OF_CHUNKS  0x01             // when each entry in aIndex
-                                              // array points to a chunk in the file
+// array points to a chunk in the file
 #define AVI_INDEX_IS_DATA    0x80             // when each entry is aIndex is
-                                              // really the data
+// really the data
 // bIndexSubtype codes for INDEX_OF_CHUNKS
 //
 #define AVI_INDEX_2FIELD     0x01             // when fields within frames
-                                              // are also indexed
+// are also indexed
 
 
 
 typedef struct _avisuperindex_entry {
-    uint64_t qwOffset;           // absolute file offset
-    uint32_t dwSize;                  // size of index chunk at this offset
-    uint32_t dwDuration;              // time span in stream ticks
+  uint64_t qwOffset;           // absolute file offset
+  uint32_t dwSize;                  // size of index chunk at this offset
+  uint32_t dwDuration;              // time span in stream ticks
 } avisuperindex_entry;
 
 typedef struct _avistdindex_entry {
-    uint32_t dwOffset;                // qwBaseOffset + this is absolute file offset
-    uint32_t dwSize;                  // bit 31 is set if this is NOT a keyframe
+  uint32_t dwOffset;                // qwBaseOffset + this is absolute file offset
+  uint32_t dwSize;                  // bit 31 is set if this is NOT a keyframe
 } avistdindex_entry;
 
 // Standard index
 typedef struct _avistdindex_chunk {
-    char           fcc[4];                 // ix##
-    uint32_t  dwSize;                 // size of this chunk
-    uint16_t wLongsPerEntry;         // must be sizeof(aIndex[0])/sizeof(DWORD)
-    uint8_t  bIndexSubType;          // must be 0
-    uint8_t  bIndexType;             // must be AVI_INDEX_OF_CHUNKS
-    uint32_t  nEntriesInUse;          //
-    char           dwChunkId[4];           // '##dc' or '##db' or '##wb' etc..
-    uint64_t qwBaseOffset;       // all dwOffsets in aIndex array are relative to this
-    uint32_t  dwReserved3;            // must be 0
-    avistdindex_entry *aIndex;
+  char           fcc[4];                 // ix##
+  uint32_t  dwSize;                 // size of this chunk
+  uint16_t wLongsPerEntry;         // must be sizeof(aIndex[0])/sizeof(DWORD)
+  uint8_t  bIndexSubType;          // must be 0
+  uint8_t  bIndexType;             // must be AVI_INDEX_OF_CHUNKS
+  uint32_t  nEntriesInUse;          //
+  char           dwChunkId[4];           // '##dc' or '##db' or '##wb' etc..
+  uint64_t qwBaseOffset;       // all dwOffsets in aIndex array are relative to this
+  uint32_t  dwReserved3;            // must be 0
+  avistdindex_entry *aIndex;
 } avistdindex_chunk;
 
 
 // Base Index Form 'indx'
 typedef struct _avisuperindex_chunk {
-    char           fcc[4];
-    uint32_t  dwSize;                 // size of this chunk
-    uint16_t wLongsPerEntry;         // size of each entry in aIndex array (must be 8 for us)
-    uint8_t  bIndexSubType;          // future use. must be 0
-    uint8_t  bIndexType;             // one of AVI_INDEX_* codes
-    uint32_t  nEntriesInUse;          // index of first unused member in aIndex array
-    char           dwChunkId[4];           // fcc of what is indexed
-    uint32_t  dwReserved[3];          // meaning differs for each index type/subtype.
-                                           // 0 if unused
-    avisuperindex_entry *aIndex;           // where are the ix## chunks
-    avistdindex_chunk **stdindex;          // the ix## chunks itself (array)
+  char           fcc[4];
+  uint32_t  dwSize;                 // size of this chunk
+  uint16_t wLongsPerEntry;         // size of each entry in aIndex array (must be 8 for us)
+  uint8_t  bIndexSubType;          // future use. must be 0
+  uint8_t  bIndexType;             // one of AVI_INDEX_* codes
+  uint32_t  nEntriesInUse;          // index of first unused member in aIndex array
+  char           dwChunkId[4];           // fcc of what is indexed
+  uint32_t  dwReserved[3];          // meaning differs for each index type/subtype.
+  // 0 if unused
+  avisuperindex_entry *aIndex;           // where are the ix## chunks
+  avistdindex_chunk **stdindex;          // the ix## chunks itself (array)
 } avisuperindex_chunk;
 
 
@@ -125,27 +125,27 @@ typedef struct _avisuperindex_chunk {
 typedef struct track_s
 {
 
-    long   a_fmt;             /* Audio format, see #defines below */
-    long   a_chans;           /* Audio channels, 0 for no audio */
-    long   a_rate;            /* Rate in Hz */
-    long   a_bits;            /* bits per audio sample */
-    long   mp3rate;           /* mp3 bitrate kbs*/
-    long   a_vbr;             /* 0 == no Variable BitRate */
-    long   padrate;       /* byte rate used for zero padding */
+  long   a_fmt;             /* Audio format, see #defines below */
+  long   a_chans;           /* Audio channels, 0 for no audio */
+  long   a_rate;            /* Rate in Hz */
+  long   a_bits;            /* bits per audio sample */
+  long   mp3rate;           /* mp3 bitrate kbs*/
+  long   a_vbr;             /* 0 == no Variable BitRate */
+  long   padrate;       /* byte rate used for zero padding */
 
-    long   audio_strn;        /* Audio stream number */
-    off_t  audio_bytes;       /* Total number of bytes of audio data */
-    long   audio_chunks;      /* Chunks of audio data in the file */
+  long   audio_strn;        /* Audio stream number */
+  off_t  audio_bytes;       /* Total number of bytes of audio data */
+  long   audio_chunks;      /* Chunks of audio data in the file */
 
-    char   audio_tag[4];      /* Tag of audio data */
-    long   audio_posc;        /* Audio position: chunk */
-    long   audio_posb;        /* Audio position: byte within chunk */
+  char   audio_tag[4];      /* Tag of audio data */
+  long   audio_posc;        /* Audio position: chunk */
+  long   audio_posb;        /* Audio position: byte within chunk */
 
-    off_t  a_codech_off;       /* absolut offset of audio codec information */
-    off_t  a_codecf_off;       /* absolut offset of audio codec information */
+  off_t  a_codech_off;       /* absolut offset of audio codec information */
+  off_t  a_codecf_off;       /* absolut offset of audio codec information */
 
-    audio_index_entry *audio_index;
-    avisuperindex_chunk *audio_superindex;
+  audio_index_entry *audio_index;
+  avisuperindex_chunk *audio_superindex;
 
 } track_t;
 
@@ -334,7 +334,7 @@ long AVI_bytes_written(avi_t *AVI);
 
 avi_t *AVI_open_input_file(const char *filename, int getIndex);
 avi_t *AVI_open_input_indexfile(const char *filename, int getIndex,
-                const char *indexfile);
+                                const char *indexfile);
 avi_t *AVI_open_fd(int fd, int getIndex);
 avi_t *AVI_open_indexfd(int fd, int getIndex, const char *indexfile);
 
@@ -398,49 +398,49 @@ int  AVI_get_comment_fd(avi_t *AVI);
 
 struct riff_struct
 {
-    uint8_t id[4];   /* RIFF */
-    uint32_t len;
-    uint8_t wave_id[4]; /* WAVE */
+  uint8_t id[4];   /* RIFF */
+  uint32_t len;
+  uint8_t wave_id[4]; /* WAVE */
 };
 
 
 struct chunk_struct
 {
-    uint8_t id[4];
-    uint32_t len;
+  uint8_t id[4];
+  uint32_t len;
 };
 
 struct common_struct
 {
-    uint16_t wFormatTag;
-    uint16_t wChannels;
-    uint32_t dwSamplesPerSec;
-    uint32_t dwAvgBytesPerSec;
-    uint16_t wBlockAlign;
-    uint16_t wBitsPerSample;  /* Only for PCM */
+  uint16_t wFormatTag;
+  uint16_t wChannels;
+  uint32_t dwSamplesPerSec;
+  uint32_t dwAvgBytesPerSec;
+  uint16_t wBlockAlign;
+  uint16_t wBitsPerSample;  /* Only for PCM */
 };
 
 struct wave_header
 {
-    struct riff_struct   riff;
-    struct chunk_struct  format;
-    struct common_struct common;
-    struct chunk_struct  data;
+  struct riff_struct   riff;
+  struct chunk_struct  format;
+  struct common_struct common;
+  struct chunk_struct  data;
 };
 
 struct AVIStreamHeader {
-    uint32_t  fccType;
-    uint32_t  fccHandler;
-    uint32_t  dwFlags;
-    uint32_t  dwPriority;
-    uint32_t  dwInitialFrames;
-    uint32_t  dwScale;
-    uint32_t  dwRate;
-    uint32_t  dwStart;
-    uint32_t  dwLength;
-    uint32_t  dwSuggestedBufferSize;
-    uint32_t  dwQuality;
-    uint32_t  dwSampleSize;
+  uint32_t  fccType;
+  uint32_t  fccHandler;
+  uint32_t  dwFlags;
+  uint32_t  dwPriority;
+  uint32_t  dwInitialFrames;
+  uint32_t  dwScale;
+  uint32_t  dwRate;
+  uint32_t  dwStart;
+  uint32_t  dwLength;
+  uint32_t  dwSuggestedBufferSize;
+  uint32_t  dwQuality;
+  uint32_t  dwSampleSize;
 } __attribute__((__packed__));
 
 #endif /* AVILIB_H */

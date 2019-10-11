@@ -43,7 +43,7 @@ Java_com_czf_aviplayer_NativeLibInterface_closeFile(JNIEnv *env, jclass clazz, j
   AVI_close((avi_t *)fileFd);
 }
 
-JNIEXPORT jint JNICALL
+JNIEXPORT jlong JNICALL
 Java_com_czf_aviplayer_NativeLibInterface_setFrame(JNIEnv *env, jclass clazz, jlong avi, jobject jbitmap) {
   char *buf = NULL;
   if (AndroidBitmap_lockPixels(env, jbitmap, (void **)&buf) < 0) {
@@ -63,5 +63,5 @@ Java_com_czf_aviplayer_NativeLibInterface_setFrame(JNIEnv *env, jclass clazz, jl
     return -1;
   }
 
-  return 0;
+  return frameSize;
 }
